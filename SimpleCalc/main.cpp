@@ -66,14 +66,15 @@ long long calculate(string temp) {  // 1)
             temp.erase(i, 1);
             start = i;
             convert = calculate(inside_brackets);
-            itoa(convert, ch, 10);
+            n = sprintf(ch, "%d", convert);
+            /* itoa(convert, ch, 10);
             n = 0;
             if ((convert == 0) || (ch[0] == '-'))
                 n = 1;
             while (abs(convert) > 0) {
                 convert /= 10;
                 n++;
-            }
+            } */
             exchange = "";
             for (int i = 0; i < n; i++)
                 exchange += ch[i];
