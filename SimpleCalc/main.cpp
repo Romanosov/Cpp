@@ -40,7 +40,7 @@ long long single(char o, int a, int b) {
 // 2) finds brackets and converts substrings inside into a number using the same function inside itself; the number goes back to the string in the certain position;
 // 3) parses the elements and divides them by two groups: numbers and operators;
 // 4) does the operations, making one result from two operands and deleting the operators from the vector;
-// 5) returns the answer or an error.
+// 5) returns the answer.
 
 long long calculate(string temp) {  // 1)
     int number;
@@ -116,32 +116,38 @@ long long calculate(string temp) {  // 1)
 // 4) Calculation begins.
 //Multiply and division.
     long long result;
-    for (i = 0; i < operators.size(); i++)
-    {
-        if ((operators[i] == '*') || (operators[i] == '/') || (operators[i]== '%')) {
-            result = single(operators[i], numbers[i], numbers[i + 1]);
-            operators.erase(operators.begin() + i);
-            numbers.erase(numbers.begin() + i + 1);
-            numbers[i] = result;
-            i--;
+    if (operators.size() + 1 != numbers.size()) {
+        cout << "Error. An incorrect expression.";
+        exit(0);
+    } else {
+        for (i = 0; i < operators.size(); i++)
+        {
+            if ((operators[i] == '*') || (operators[i] == '/') || (operators[i]== '%')) {
+                result = single(operators[i], numbers[i], numbers[i + 1]);
+                operators.erase(operators.begin() + i);
+                numbers.erase(numbers.begin() + i + 1);
+                numbers[i] = result;
+                i--;
+            }
         }
-    }
 // Addition and subtraction.
-    for (i = 0; i < operators.size(); i++)
-    {
-        if ((operators[i] == '-') || (operators[i] == '+')) {
-            result = single(operators[i], numbers[i], numbers[i + 1]);
-            operators.erase(operators.begin() + i);
-            numbers.erase(numbers.begin() + i + 1);
-            numbers[i] = result;
-            i--;
+        for (i = 0; i < operators.size(); i++)
+        {
+            if ((operators[i] == '-') || (operators[i] == '+')) {
+                result = single(operators[i], numbers[i], numbers[i + 1]);
+                operators.erase(operators.begin() + i);
+                numbers.erase(numbers.begin() + i + 1);
+                numbers[i] = result;
+                i--;
+            }
         }
     }
-    if (operators.size() == 0)
-        return numbers[0];
-    else
-        return result;
-}
+// 5)
+        if (operators.size() == 0)
+            return numbers[0];
+        else
+            return result;
+    }
 
 // Main function.
 int main() {
