@@ -43,6 +43,7 @@ long long single(char o, int a, int b) {
 // 5) returns the answer.
 
 long long calculate(string temp) {  // 1)
+    int balance = 0;
     int number;
     int i, n, convert, start, finish;
     string exchange, inside_brackets, inside_brackets_update, number_string = "";
@@ -50,6 +51,18 @@ long long calculate(string temp) {  // 1)
     vector<char> operators;
     char ch[30000];
 // 2) Dealing with the brackets. Recursion is used for each pair of them.
+    for (i = 0; i < temp.size(); i++) {
+        if (temp[i] == ')') {
+            balance--;
+        }
+        if (temp[i] == '(') {
+            balance++;
+        }
+    }
+    if (balance != 0) {
+        cout << "Error. An incorrect bracket sequence.";
+        exit(0);
+    }
     for (i = 0; i < temp.size(); i++) {
         if (temp[i] == ')') {
             temp.erase(i, 1);
