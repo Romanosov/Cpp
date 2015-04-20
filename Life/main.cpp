@@ -79,36 +79,37 @@ int main() {
                 if ((i > 0) && (j > 0))
                     if (the_field[i - 1][j - 1] == true)
                         alive_count++;
-                if (j > 0)
-                    if (the_field[i][j - 1] == true)
-                        alive_count++;
-                if ((i < n - 1) && (j > 0))
-                    if (the_field[i + 1][j - 1] == true)
-                        alive_count++;
                 if (i > 0)
                     if (the_field[i - 1][j] == true)
                         alive_count++;
-                if (i < n - 1)
-                    if (the_field[i + 1][j] == true)
-                        alive_count++;
-                if ((i > 0) && (j < n - 1))
+                if ((j < n - 1) && (i > 0))
                     if (the_field[i - 1][j + 1] == true)
+                        alive_count++;
+                if (j > 0)
+                    if (the_field[i][j - 1] == true)
                         alive_count++;
                 if (j < n - 1)
                     if (the_field[i][j + 1] == true)
                         alive_count++;
+                if ((j > 0) && (i < n - 1))
+                    if (the_field[i + 1][j - 1] == true)
+                        alive_count++;
+                if (i < n - 1)
+                    if (the_field[i + 1][j] == true)
+                        alive_count++;
                 if ((i < n - 1) && (j < n - 1))
                     if (the_field[i + 1][j + 1] == true)
                         alive_count++;
-                if ((the_field[i][j] == false) && (alive_count == 3)) {
-                    the_field[i][j] = true;
-                    alive_count_total++;
-                    born_count++;
-                }
+                // Cell's fatality for the next step.
                 if ((the_field[i][j] == true) && ((alive_count > 3) || (alive_count < 2))) {
                     the_field[i][j] = false;
                     alive_count_total--;
                     died_count++;
+                }
+                if ((the_field[i][j] == false) && (alive_count == 3)) {
+                    the_field[i][j] = true;
+                    alive_count_total++;
+                    born_count++;
                 }
             }
         }
