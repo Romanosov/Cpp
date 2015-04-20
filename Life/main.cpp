@@ -51,29 +51,24 @@ int main() {
         }
     } else {
         for (i = 0; i < amount; i++) {
-            vx = rand() * n;
-            while (vx >= n - 1)
-                vx /= 3;
-            vy = rand() * n;
-            while (vy >= n - 1)
-                vy /= 3;
-            if ((vx < n - 1) && (vy < n - 1) && (vx >= 0) && (vy >= 0)) {
+            vx = rand() % n;
+            vy = rand() % n;
+            if ((vx < n - 1) && (vy < n - 1) && (vx >= 0) && (vy >= 0))
                 if (the_field[vy][vx] == false)
                     the_field[vy][vx] = true;
                 else {
                     i--;
                     continue;
+                } else {
+                    i--;
+                    continue;
                 }
-            } else {
-                i--;
-                continue;
             }
-        }
     }
 // The simulation.
     died_count = 0;
     born_count = 0;
-    cout << "Begin of the simulation." << endl << endl;
+    cout << endl << "Start of the simulation." << endl << endl;
     cout << endl << "------------------------------------------------------------------" << endl << endl;
     for (k = 0; k < steps; k++) {
         alive_count_total = amount;
@@ -203,7 +198,10 @@ int main() {
                         if (n < 11)
                             cout << "  " << n - 1 << " %";
                         else
-                            cout << " " << n - 1 << " %";
+                            if (n > 100)
+                                cout << " " << n - 1 << "%";
+                            else
+                                cout << " " << n - 1 << " %";
                     else
                         cout << "    %";
                 for (j = 0; j < n; j++) {
@@ -233,7 +231,7 @@ int main() {
                     right_view = 21;
                 } else {
                     if (view_x + 10 > n - 1) {
-                        right_view = n - 1;
+                        right_view = n - 2;
                         left_view = n - 22;
                     } else {
                         right_view = view_x + 10;
@@ -255,24 +253,42 @@ int main() {
 
             cout << "Field size: " << n << " x " << n << endl;
             cout << "     " << left_view - 1 << " ";
-            for (j = 0; j < 20; j++)
-                cout << "  ";
+            int d;
+            if ((left_view + right_view < 101) && (left_view < 11))
+                d = 40;
+            if ((left_view + right_view < 101) && (left_view >= 11))
+                d = 39;
+            if ((left_view + right_view < 202) && (left_view + right_view > 101))
+                d = 39;
+            if (left_view + right_view > 202)
+                d = 38;
+            for (j = 0; j < d; j++)
+                cout << " ";
             cout << right_view - 1 << endl;
             cout << "    ";
             for (j = 0; j < 23; j++)
                 cout << "%%";
             cout << endl;
-            for (i = up_view - 1; i <= down_view; i++) {
+            for (i = up_view - 1; i < down_view; i++) {
                 if (i == up_view - 1)
                     if (up_view < 11)
                         cout << "  " << up_view - 1 << " %";
                     else
-                        cout << " " << up_view - 1 << " %";
+                        if (up_view > 100)
+                            cout << " " << up_view - 1 << "%";
+                        else
+                            cout << " " << up_view - 1 << " %";
                 else
                     if (i == down_view - 1)
-                        cout << " " << down_view - 1 << " %";
-                    else
-                        cout << "    %";
+                        if (down_view < 11)
+                            cout << "  " << down_view - 1 << " %";
+                        else
+                            if (down_view > 100)
+                                cout << " " << down_view - 1 << "%";
+                            else
+                                cout << " " << down_view - 1 << " %";
+                     else
+                    cout << "    %";
                 for (j = left_view - 1; j <= right_view; j++) {
                     if (the_field[i][j] == true)
                         cout << "*" << " ";
