@@ -72,41 +72,50 @@ int main() {
     cout << endl << "------------------------------------------------------------------" << endl << endl;
     for (k = 0; k < steps; k++) {
         alive_count_total = amount;
+        // Copying of the previous step for correct simulating.
+        bool** the_field_prev = new bool*[n];
+        for (i = 0; i < n; i++)
+            the_field_prev[i] = new bool[n];
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                the_field_prev[i][j] = the_field[i][j];
+            }
+        }
         // Any neighbours?
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
                 alive_count = 0;
                 if ((i > 0) && (j > 0))
-                    if (the_field[i - 1][j - 1] == true)
+                    if (the_field_prev[i - 1][j - 1] == true)
                         alive_count++;
                 if (i > 0)
-                    if (the_field[i - 1][j] == true)
+                    if (the_field_prev[i - 1][j] == true)
                         alive_count++;
                 if ((j < n - 1) && (i > 0))
-                    if (the_field[i - 1][j + 1] == true)
+                    if (the_field_prev[i - 1][j + 1] == true)
                         alive_count++;
                 if (j > 0)
-                    if (the_field[i][j - 1] == true)
+                    if (the_field_prev[i][j - 1] == true)
                         alive_count++;
                 if (j < n - 1)
-                    if (the_field[i][j + 1] == true)
+                    if (the_field_prev[i][j + 1] == true)
                         alive_count++;
                 if ((j > 0) && (i < n - 1))
-                    if (the_field[i + 1][j - 1] == true)
+                    if (the_field_prev[i + 1][j - 1] == true)
                         alive_count++;
                 if (i < n - 1)
-                    if (the_field[i + 1][j] == true)
+                    if (the_field_prev[i + 1][j] == true)
                         alive_count++;
                 if ((i < n - 1) && (j < n - 1))
-                    if (the_field[i + 1][j + 1] == true)
+                    if (the_field_prev[i + 1][j + 1] == true)
                         alive_count++;
                 // Cell's fatality for the next step.
-                if ((the_field[i][j] == true) && ((alive_count > 3) || (alive_count < 2))) {
+                if ((the_field_prev[i][j] == true) && ((alive_count > 3) || (alive_count < 2))) {
                     the_field[i][j] = false;
                     alive_count_total--;
                     died_count++;
                 }
-                if ((the_field[i][j] == false) && (alive_count == 3)) {
+                if ((the_field_prev[i][j] == false) && (alive_count == 3)) {
                     the_field[i][j] = true;
                     alive_count_total++;
                     born_count++;
