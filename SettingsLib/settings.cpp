@@ -171,7 +171,7 @@ settings::param & settings::param::operator /= (int value) {
     stringstream stst;
     int dem = atoi(this->value.c_str()) / value;
     stst << dem;
-    this->value = ss.str();
+    this->value = stst.str();
     parent->set(this->name, this->value);
     return *this;
 }
@@ -215,6 +215,9 @@ settings::param settings::operator[](std::string const & name) {
 }
 
 int main(int argc, char* argv[]) {
+    //settings* a = new settings("what.the");
+    //a->reload();
+    //cout << a->get("three");
     return 0;
 }
 
